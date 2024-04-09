@@ -5,21 +5,14 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 
 # Create your views here.
-@login_required
 def home(request):
     
     products = Product.objects.all()
 
-    # add a new key likes to each product
-    for product in products:
-        product.likes = ProductLike.objects.filter(product=product).count()
+    search_product = request.GET.get('search')
+    if search_product != "" and search_product is not None:
+        products = Product.objects.filter(name__icontains=search_product)
 
-    # sort products by likes
-    products = sorted(products, key=lambda x: x.likes, reverse=True)
-
-    context = {
-        'products': products
-    }
 
     if request.method == 'POST':
         user = request.user
@@ -34,7 +27,15 @@ def home(request):
         else:
             ProductLike.objects.filter(product=product, user=user).delete()
 
+    # add a new key likes to each product
+    for product in products:
+        product.likes = ProductLike.objects.filter(product=product).count()
 
+    # sorting products in descending order of likes
+    products = sorted(products, key=lambda x: x.likes, reverse=True)
+    context = {
+        'products': products
+    }
     return render(request, 'users/index.html', context)
 
 def login_view(request):
