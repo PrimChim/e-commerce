@@ -16,6 +16,11 @@ Go to project directory
 cd e-commerce
 ```
 
+Create a .env file and add following content
+```bash
+SECRET_KEY=qwertyuioplkjhgfdsazxcvbnm!@$%^&^@$!@$!@c!ss%6^&f5h!89u4w-v^64n^5^qpno7t&_7%vm9AP4Ch1BVMqrIBccv2W0loNbbyL6vxQ1w@dpgoo3va@z%us$hqu18b9!1*&8x9!5tnw78m)jkt5=j-i1f&21%c&
+```
+
 ## Make a virtual environment
 
 ```bash
