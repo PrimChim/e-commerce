@@ -54,5 +54,5 @@ python manage.py migrate
 Runserver
 
 ```bash
-python manage.py Runserver
+python manage.py runserver
 ```
