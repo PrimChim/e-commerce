@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from products.models import Product, ProductLike
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
@@ -53,3 +54,24 @@ def login_view(request):
             return render(request, 'users/login.html', {'error': 'Invalid credentials'})
 
     return render(request, 'users/login.html')
+
+def register_view(request):
+    if request.method == 'POST':
+        data = request.POST
+        username = data['username']
+        email = data['email']
+        password = data['password']
+        password2 = data['confirm_password']
+
+        if password == password2:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            login(request, user)
+            return redirect('users:home')
+        else:
+            return render(request, 'users/register.html', {'error': 'Passwords do not match'})
+    return render(request, 'users/register.html')
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('users:home')
