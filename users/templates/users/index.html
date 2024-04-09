@@ -28,7 +28,7 @@
                                  {% csrf_token %}
                                  <input type="hidden" name="product_id" value="{{ product.id }}">
                                  <!-- number of likes -->
-                                 <span class="like_count active">
+                                 <span class="like_count  bg-info p-2 rounded">
                                  {{ product.likes }}
                                  </span>
                                  <button type="submit" class="btn btn-primary">Like</button>
